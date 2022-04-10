@@ -23,3 +23,7 @@ Route::post('/listbarang/createbarang', [Controller::class, 'prosesCreateBarang'
 Route::put('/listbarang/updatebarang', [Controller::class, 'prosesUpdateBarang']);
 Route::get('/listbarang/deletebarang/{id}', [Controller::class, 'prosesDeleteBarang']);
 Route::Delete('/listbarang/deletebarangform/{id}', [Controller::class, 'prosesDeleteBarang']);
+
+
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
