@@ -12,7 +12,7 @@
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-                <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+                <li class="active"><a href="/"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
                 <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
             </ul>
         </li>
@@ -152,9 +152,9 @@
 
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">List Barang Toko</h3>
+                    <h3 class="box-title">Master Barang</h3>
                     <div class="pull-right box-tools">
-                        <button class="btn btn-info btn-sm" title="create" data-toggle="modal" data-target="#myModal">Tambah
+                        <button class="btn btn-info btn-sm" title="Remove" data-toggle="modal" data-target="#myModal">Tambah
                             Barang</button>
                     </div>
                 </div><!-- /.box-header -->
@@ -163,33 +163,43 @@
                         <thead>
                             <tr>
                                 <th>Nama Barang</th>
-                                <th>harga</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- <?php foreach ($data as $row) : ?>
-                            <tr>
-                                <td><?= $row->nama_barang ?></td>
-                                <td>Rp <?php echo number_format($row->harga, 0, ',', '.'); ?></td>
-                                <td>
-                                    <button class="btn btn-warning get-data-barang-toko" data-toggle="modal"
-                                        data-target="#myModalUpdate" data-id="<?= $row->id_transaksi ?>">
-                                        <i class="fa fa-edit" aria-hidden="true"></i>
-                                    </button>
-                                    ||
-                                    <button class="btn btn-danger delete-data-barang-toko"
-                                        data-id="<?= $row->id_transaksi ?>">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?> --}}
+                            @foreach ($data as $row)
+                                <tr>
+                                    <td>{{ $row->nama_barang }}</td>
+                                    <td>
+                                        <button class="btn btn-warning get-data-update-barang" data-toggle="modal"
+                                            data-target="#myModalUpdate" data-id="{{ $row->id_barang }}">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        ||
+                                        {{-- <form action="/listbarang/deletebarangform/{{ $row->id_barang }}" method="post">
+                                          @method('Delete')
+                                          @csrf
+                                          <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure ?')">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        </form> --}}
+                                        {{-- <a href="/listbarang/deletebarang/{{ $row->id_barang }}"
+                                            onclick="return confirm('Are you sure ?')">
+                                            <button class="btn btn-danger delete-barang" data-id="{{ $row->id_barang }}">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </a> --}}
+                                        <button class="btn btn-danger delete-barang" data-toggle="modal"
+                                            data-target="#myModalDelete" data-id="{{ $row->id_barang.";".$row->nama_barang }}">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th>Nama Barang</th>
-                                <th>harga</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -197,7 +207,96 @@
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
-    </div><!-- /.row -->
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST" action="/listbarang/createbarang">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Create Barang</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Barang</label>
+                                <input type="text" name="barang" class="form-control" placeholder="Enter Barang"
+                                    required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="/listbarang/updatebarang" method="POST" id="form-update-barang">
+                    @method('PUT')
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Update Barang</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Barang</label>
+                                <input type="hidden" name="id_barang">
+                                <input type="text" name="nama_barang" class="form-control" placeholder="Enter Barang"
+                                    required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/listbarang/deletebarangform/{{ $row->id_barang }}" method="post">
+                    @method('Delete')
+                    @csrf
+                    <div class="modal-body">
+                      <input type="hidden" name="id_barang">
+                        Yakin ingin menghapus <span id="nama_barang"></span> ????
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('header-content')

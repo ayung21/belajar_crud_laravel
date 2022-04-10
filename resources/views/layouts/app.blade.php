@@ -18,7 +18,7 @@
     <!-- iCheck -->
     <link href="plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
     <!-- Morris chart -->
-    <link href="plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+    {{-- <link href="plugins/morris/morris.css" rel="stylesheet" type="text/css" /> --}}
     <!-- jvectormap -->
     <link href="plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
     <!-- Date Picker -->
@@ -117,11 +117,12 @@
     <script>
       $.widget.bridge('uibutton', $.ui.button);
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>    
     <!-- Morris.js charts -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="plugins/morris/morris.min.js" type="text/javascript"></script>
+    {{-- <script src="plugins/morris/morris.min.js" type="text/javascript"></script> --}}
     <!-- Sparkline -->
     <script src="plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
     <!-- jvectormap -->
@@ -144,9 +145,11 @@
     <!-- AdminLTE App -->
     <script src="dist/js/app.min.js" type="text/javascript"></script>
 
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="dist/js/pages/dashboard.js" type="text/javascript"></script>
+    {{-- <script src="adminjs/app.js" type="text/javascript"></script> --}}
 
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    {{-- <script src="dist/js/pages/dashboard.js" type="text/javascript"></script> --}}
+    <script src="adminjs/barang.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
   </body>

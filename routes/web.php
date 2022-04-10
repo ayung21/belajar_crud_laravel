@@ -18,4 +18,8 @@ Route::get('/', function () {
     return view('child');
 });
 
-Route::get('/listbarangtoko', [Controller::class, 'listBarangToko']);
+Route::get('/listbarang', [Controller::class, 'listBarang'])->middleware('auth');
+Route::post('/listbarang/createbarang', [Controller::class, 'prosesCreateBarang']);
+Route::put('/listbarang/updatebarang', [Controller::class, 'prosesUpdateBarang']);
+Route::get('/listbarang/deletebarang/{id}', [Controller::class, 'prosesDeleteBarang']);
+Route::Delete('/listbarang/deletebarangform/{id}', [Controller::class, 'prosesDeleteBarang']);
