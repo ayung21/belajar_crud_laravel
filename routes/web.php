@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Controller;
-
+use App\Jobs\SendEmailJob;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,15 +15,21 @@ use App\Http\Controllers\Controller;
 */
 
 Route::get('/', function () {
-    return view('child');
+    return view('welcome');
 });
 
-Route::get('/listbarang', [Controller::class, 'listBarang'])->middleware('auth');
-Route::post('/listbarang/createbarang', [Controller::class, 'prosesCreateBarang']);
-Route::put('/listbarang/updatebarang', [Controller::class, 'prosesUpdateBarang']);
-Route::get('/listbarang/deletebarang/{id}', [Controller::class, 'prosesDeleteBarang']);
-Route::Delete('/listbarang/deletebarangform/{id}', [Controller::class, 'prosesDeleteBarang']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::get('image/index', [ImageController::class, 'index']);
+Route::post('image/upload', [ImageController::class, 'upload']);
+
+Route::get('test/send-email', function(){
+    $sendmail = 'ayungyung20@gmail.com';
+    dispatch(new \App\Jobs\SendEmailJob($sendmail));
+    dd('send email on progress...');
+});
 
 
-Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+require __DIR__.'/auth.php';
